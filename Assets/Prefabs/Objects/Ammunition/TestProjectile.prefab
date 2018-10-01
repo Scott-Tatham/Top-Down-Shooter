@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 33585697736481738}
   - component: {fileID: 23921986886191130}
   - component: {fileID: 135407920762311020}
-  - component: {fileID: 54547159745657790}
+  - component: {fileID: 54216011935966806}
   - component: {fileID: 114493920674431796}
   m_Layer: 0
-  m_Name: TestAmmo
+  m_Name: TestProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1936678078007262}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54547159745657790
+--- !u!54 &54216011935966806
 Rigidbody:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,8 +112,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6bed13586ace9449b3c6f85ad5d66a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 20
-  projectileLife: 2.5
+  primaryFireType: 0
+  impactTypes:
+    serializedVersion: 2
+    m_Bits: 1536
+  damageMultiplier: 1
+  fireRateMultiplier: 0.5
+  ammoRangeMultiplier: 4
+  projectileLife: 0.25
 --- !u!135 &135407920762311020
 SphereCollider:
   m_ObjectHideFlags: 1

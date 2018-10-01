@@ -3,15 +3,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A collection of useful code pieces.
+/// </summary>
 namespace ScottyCode
 {
+    /// <summary>
+    /// Extensions.
+    /// </summary>
     namespace Extensions
     {
+        /// <summary>
+        /// Generic Extensions.
+        /// </summary>
+        namespace Generic
+        {
+            /// <summary>
+            /// Extensions for generics.
+            /// </summary>
+            public static class GenericExtensions
+            {
+                /// <summary>
+                /// Generic parsing.
+                /// </summary>
+                /// <typeparam name="T"> The type to convert to. </typeparam>
+                /// <param name="obj"> The object to convert. </param>
+                /// <returns> The new object type. </returns>
+                public static T Parse<T>(this object obj)
+                {
+                    return (T)Convert.ChangeType(obj, typeof(T));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Extensions that work with Rich Text.
+        /// </summary>
+        public static class RichTextExtentions
+        {
+            // Colours string with the specified colour.
+            public static string Colour(this string val, Color color)
+            {
+                return "<color=#" + ColorUtility.ToHtmlStringRGBA(color) + ">" + val + "</color>";
+            }
+        }
+
+        /// <summary>
+        /// Extensions that manipulate strings.
+        /// </summary>
         public static class StringExtentions
         {
+
             #region Public Methods
 
-            // Creates a pretty print of the string, useful for Json.
+            /// <summary>
+            /// Creates a pretty print of the string, useful for JSON.
+            /// </summary>
+            /// <param name="val"> The input string. </param>
+            /// <returns> The neatened string. </returns>
             public static string Neaten(this string val)
             {
                 int indent = 0;
@@ -58,6 +107,11 @@ namespace ScottyCode
                 return newVal;
             }
 
+            /// <summary>
+            /// Returns a number in word form.
+            /// </summary>
+            /// <param name="val"> Number to convert. </param>
+            /// <returns> Number word. </returns>
             public static string NumberNames(this int val)
             {
                 switch (val)
@@ -113,6 +167,11 @@ namespace ScottyCode
 
             #region Private Methods
 
+            /// <summary>
+            /// Simple indenting function.
+            /// </summary>
+            /// <param name="indent"> How far to indent. </param>
+            /// <returns> The indented string. </returns>
             static string Indent(int indent)
             {
                 string indentString = "";
@@ -129,11 +188,20 @@ namespace ScottyCode
         }
     }
 
+    /// <summary>
+    /// Helpers.
+    /// </summary>
     namespace Helpers
     {
+        /// <summary>
+        /// JSON Helpers.
+        /// </summary>
         namespace JsonHelpers
         {
-            // A generic class type that contains a list for using Unity's Json Utilities with arrays/lists.
+            /// <summary>
+            /// A generic class type that contains a list for using Unity's JSON Utilities with arrays/lists.
+            /// </summary>
+            /// <typeparam name="T"> Type the container is for. </typeparam>
             [Serializable]
             public class JsonArrayContainer<T>
             {

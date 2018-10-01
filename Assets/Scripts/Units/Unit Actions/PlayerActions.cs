@@ -16,9 +16,14 @@ public class PlayerActions : MonoBehaviour
 
     void Update()
     {
-        Move();
-        Rotation();
-        Fire();
+        if (!DevConsole.GetDevConsole().GetIsActive())
+        {
+            Move();
+            Rotation();
+            Activate();
+            Deactivate();
+            Fire();
+        }
     }
 
     void Move()
@@ -37,6 +42,22 @@ public class PlayerActions : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
+        }
+    }
+
+    void Activate()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+
+        }
+    }
+
+    void Deactivate()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            weapon.DeactivatePrimaryFire();
         }
     }
 

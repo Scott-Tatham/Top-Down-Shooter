@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class WeaponClip : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Range(1, 100)]
     int clipSize;
     [SerializeField, Range(0.01f, 10.0f)]
-    float fireRate, reloadTime;
+    float reloadTime;
+    [SerializeField, Range(0.01f, 20.0f)]
+    float ammoRange;
     [SerializeField]
     GameObject ammoObj;
 
     bool nextRound, reloading;
     int clipIndex;
-    WeaponType weaponType;
+    PrimaryFireType primaryFireType;
+    AltFireType altFireType;
+    float fireRateMultiplier;
     Weapon weapon;
+    WeaponBarrel weaponBarrel;
     List<Ammo> ammo;
 
     void Start()
@@ -22,13 +27,42 @@ public class WeaponClip : MonoBehaviour
         nextRound = true;
         ammo = new List<Ammo>();
         weapon = GetComponent<Weapon>();
-        weaponType = weapon.GetWeaponType();
+        weaponBarrel = GetComponent<WeaponBarrel>();
+        primaryFireType = ammoObj.GetComponent<Ammo>().GetPrimaryFireType();
+        weapon.SetPrimaryFireType(primaryFireType);
+        altFireType = weapon.GetAltFireType();
+        fireRateMultiplier = ammoObj.GetComponent<Ammo>().GetFireRateMultiplier();
 
-        for (int i = 0; i < clipSize * 2; i++)
+        if (primaryFireType == PrimaryFireType.PROJECTILE || primaryFireType == PrimaryFireType.ROCKET)
+        {
+            for (int i = 0; i < clipSize * 2; i++)
+            {
+                ammo.Add(Instantiate(ammoObj, Vector3.zero, Quaternion.identity).GetComponent<Ammo>());
+                ammo[i].SetWeapon(weapon);
+                ammo[i].gameObject.SetActive(false);
+                ammo[i].SetBaseDamage(weaponBarrel.GetBaseDamage());
+                ammo[i].SetAmmoRange(ammoRange);
+            }
+        }
+
+        else
         {
             ammo.Add(Instantiate(ammoObj, Vector3.zero, Quaternion.identity).GetComponent<Ammo>());
-            ammo[i].SetWeapon(weapon);
-            ammo[i].gameObject.SetActive(false);
+            ammo[0].SetWeapon(weapon);
+            ammo[0].gameObject.SetActive(false);
+            ammo[0].SetBaseDamage(weaponBarrel.GetBaseDamage());
+            ammo[0].SetAmmoRange(ammoRange);
+        }
+    }
+
+    public void Deactivate()
+    {
+        if (!reloading)
+        {
+            if (primaryFireType == PrimaryFireType.SPRAY || primaryFireType == PrimaryFireType.BEAM)
+            {
+                ammo[0].GetComponent<IHold>().Deactivate();
+            }
         }
     }
 
@@ -36,9 +70,9 @@ public class WeaponClip : MonoBehaviour
     {
         if (!reloading)
         {
-            switch (weaponType)
+            switch (primaryFireType)
             {
-                case WeaponType.PROJECTILE:
+                case PrimaryFireType.PROJECTILE:
                     if (nextRound)
                     {
                         for (int i = 0; i < ammo.Count; i++)
@@ -46,9 +80,8 @@ public class WeaponClip : MonoBehaviour
                             if (!ammo[i].GetIsFired())
                             {
                                 ammo[i].GetComponent<IAmmo>().Fire();
-                                clipIndex++;
                                 nextRound = false;
-                                StartCoroutine(NextRouund());
+                                StartCoroutine(UseAmmo());
 
                                 break;
                             }
@@ -57,7 +90,7 @@ public class WeaponClip : MonoBehaviour
 
                     break;
 
-                case WeaponType.ROCKET:
+                case PrimaryFireType.ROCKET:
                     if (nextRound)
                     {
                         for (int i = 0; i < ammo.Count; i++)
@@ -65,9 +98,8 @@ public class WeaponClip : MonoBehaviour
                             if (!ammo[i].GetIsFired())
                             {
                                 ammo[i].GetComponent<IAmmo>().Fire();
-                                clipIndex++;
                                 nextRound = false;
-                                StartCoroutine(NextRouund());
+                                StartCoroutine(UseAmmo());
 
                                 break;
                             }
@@ -76,15 +108,35 @@ public class WeaponClip : MonoBehaviour
 
                     break;
 
-                case WeaponType.SPRAY:
+                case PrimaryFireType.SPRAY:
+                    if (!ammo[0].GetIsFired())
+                    {
+                        ammo[0].GetComponent<IHold>().Activate();
+                    }
+
                     ammo[0].GetComponent<IAmmo>().Fire();
-                    StartCoroutine(UseAmmo());
+
+                    if (nextRound)
+                    {
+                        nextRound = false;
+                        StartCoroutine(UseAmmo());
+                    }
 
                     break;
 
-                case WeaponType.BEAM:
+                case PrimaryFireType.BEAM:
+                    if (!ammo[0].GetIsFired())
+                    {
+                        ammo[0].GetComponent<IHold>().Activate();
+                    }
+
                     ammo[0].GetComponent<IAmmo>().Fire();
-                    StartCoroutine(UseAmmo());
+
+                    if (nextRound)
+                    {
+                        nextRound = false;
+                        StartCoroutine(UseAmmo());
+                    }
 
                     break;
             }
@@ -92,21 +144,22 @@ public class WeaponClip : MonoBehaviour
             if (clipIndex >= clipSize)
             {
                 reloading = true;
+
+                if (primaryFireType == PrimaryFireType.SPRAY || primaryFireType == PrimaryFireType.BEAM)
+                {
+                    ammo[0].GetComponent<IHold>().Deactivate();
+                }
+
                 StartCoroutine(Reload());
             }
         }
     }
 
-    IEnumerator NextRouund()
-    {
-        yield return new WaitForSeconds(fireRate);
-        nextRound = true;
-    }
-
     IEnumerator UseAmmo()
     {
-        yield return new WaitForSeconds(fireRate);
         clipIndex++;
+        yield return new WaitForSeconds(weaponBarrel.GetFireRate() * fireRateMultiplier);
+        nextRound = true;
     }
 
     IEnumerator Reload()

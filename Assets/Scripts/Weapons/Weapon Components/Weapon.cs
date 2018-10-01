@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponType
+public enum PrimaryFireType
 {
     PROJECTILE,
     ROCKET,
@@ -12,34 +12,34 @@ public enum WeaponType
 
 public enum AltFireType
 {
-    EMPTYCLIP,
-    BUCKSHOT,
-    CHUCKSHOT,
-    JUMBO,
-    LOBBED,
-    MULTI,
-    BALL,
-    CANISTER,
-    AREAMIST,
-    AREAPULSE,
-    OVERCHARGE,
-    SPLIT
+    ALTONE,
+    ALTTWO,
+    ALTTHREE
 }
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField]
-    WeaponType weaponType;
-    [SerializeField]
+    PrimaryFireType primaryFireType;
     AltFireType altFireType;
 
     WeaponClip weaponClip;
+    WeaponBarrel weaponBarrel;
 
-    public WeaponType GetWeaponType() { return weaponType; }
+    public PrimaryFireType GetPrimaryFireType() { return primaryFireType; }
+    public AltFireType GetAltFireType() { return altFireType; }
+
+    public void SetPrimaryFireType(PrimaryFireType primaryFireType) { this.primaryFireType = primaryFireType; }
+    public void SetAltFireType(AltFireType altFireType) { this.altFireType = altFireType; }
 
     void Start()
     {
         weaponClip = GetComponent<WeaponClip>();
+        weaponBarrel = GetComponent<WeaponBarrel>();
+    }
+
+    public void DeactivatePrimaryFire()
+    {
+        weaponClip.Deactivate();
     }
 
     public void PrimaryFire()
