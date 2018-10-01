@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : Ammo, IAmmo
+// Rotation is off now until models come in.
+public class Rocket : Ammo, IAmmo
 {
     [SerializeField, Range(0.01f, 10.0f)]
-    float projectileLife;
+    float rocketLife, impactRadius;
 
     void Update()
     {
@@ -18,30 +19,38 @@ public class Projectile : Ammo, IAmmo
         isFired = true;
         transform.position = weapon.transform.position;
         transform.rotation = weapon.transform.rotation;
+        transform.Rotate(90, 0, 0, Space.Self);
 
-        StartCoroutine(ProjectileLife());
+        StartCoroutine(RocketLife());
     }
 
     public void WeaponBehaviour()
     {
         if (isFired)
         {
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, ammoRange * ammoRangeMultiplier * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.up, ammoRange * ammoRangeMultiplier * Time.deltaTime);
         }
     }
-
+    
     void OnCollisionEnter(Collision col)
     {
         if (((1 << col.gameObject.layer) | impactTypes.value) == impactTypes.value)
         {
             gameObject.SetActive(false);
             isFired = false;
+
+            Collider[] impactCols = Physics.OverlapSphere(col.contacts[0].point, impactRadius, impactTypes);
+
+            if (impactCols.Length > 0)
+            {
+
+            }
         }
     }
 
-    IEnumerator ProjectileLife()
+    IEnumerator RocketLife()
     {
-        yield return new WaitForSeconds(projectileLife);
+        yield return new WaitForSeconds(rocketLife);
         gameObject.SetActive(false);
         isFired = false;
     }
