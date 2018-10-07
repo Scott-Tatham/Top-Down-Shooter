@@ -20,6 +20,7 @@ public class WeaponClip : MonoBehaviour
     float fireRateMultiplier;
     Weapon weapon;
     WeaponBarrel weaponBarrel;
+    WeaponScope weaponScope;
     List<Ammo> ammo;
 
     void Start()
@@ -28,6 +29,7 @@ public class WeaponClip : MonoBehaviour
         ammo = new List<Ammo>();
         weapon = GetComponent<Weapon>();
         weaponBarrel = GetComponent<WeaponBarrel>();
+        weaponScope = GetComponent<WeaponScope>();
         primaryFireType = ammoObj.GetComponent<Ammo>().GetPrimaryFireType();
         weapon.SetPrimaryFireType(primaryFireType);
         altFireType = weapon.GetAltFireType();
@@ -42,6 +44,7 @@ public class WeaponClip : MonoBehaviour
                 ammo[i].gameObject.SetActive(false);
                 ammo[i].SetBaseDamage(weaponBarrel.GetBaseDamage());
                 ammo[i].SetAmmoRange(ammoRange);
+                ammo[i].SetAccuracy(weaponScope.GetAccuracy());
             }
         }
 
@@ -52,6 +55,7 @@ public class WeaponClip : MonoBehaviour
             ammo[0].gameObject.SetActive(false);
             ammo[0].SetBaseDamage(weaponBarrel.GetBaseDamage());
             ammo[0].SetAmmoRange(ammoRange);
+            ammo[0].SetAccuracy(weaponScope.GetAccuracy());
         }
     }
 
@@ -130,10 +134,9 @@ public class WeaponClip : MonoBehaviour
                         ammo[0].GetComponent<IHold>().Activate();
                     }
 
-                    ammo[0].GetComponent<IAmmo>().Fire();
-
                     if (nextRound)
                     {
+                        ammo[0].GetComponent<IAmmo>().Fire();
                         nextRound = false;
                         StartCoroutine(UseAmmo());
                     }

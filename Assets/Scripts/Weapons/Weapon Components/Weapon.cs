@@ -24,6 +24,7 @@ public class Weapon : MonoBehaviour
 
     WeaponClip weaponClip;
     WeaponBarrel weaponBarrel;
+    WeaponScope weaponScope;
 
     public PrimaryFireType GetPrimaryFireType() { return primaryFireType; }
     public AltFireType GetAltFireType() { return altFireType; }
@@ -35,6 +36,7 @@ public class Weapon : MonoBehaviour
     {
         weaponClip = GetComponent<WeaponClip>();
         weaponBarrel = GetComponent<WeaponBarrel>();
+        weaponScope = GetComponent<WeaponScope>();
     }
 
     public void DeactivatePrimaryFire()

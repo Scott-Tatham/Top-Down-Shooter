@@ -12,7 +12,7 @@ public class Ammo : MonoBehaviour
     protected float damageMultiplier, fireRateMultiplier, ammoRangeMultiplier;
 
     protected bool isFired;
-    protected float baseDamage, ammoRange;
+    protected float baseDamage, ammoRange, accuracy;
     protected Weapon weapon;
 
     public bool GetIsFired() { return isFired; }
@@ -21,5 +21,6 @@ public class Ammo : MonoBehaviour
 
     public void SetBaseDamage(float baseDamage) { this.baseDamage = baseDamage; }
     public void SetAmmoRange(float ammoRange) { this.ammoRange = ammoRange; }
+    public void SetAccuracy(float accuracy) { this.accuracy = accuracy; }
     public void SetWeapon(Weapon weapon) { this.weapon = weapon; }
 }

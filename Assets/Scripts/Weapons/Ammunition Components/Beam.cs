@@ -7,6 +7,7 @@ public class Beam : Ammo, IAmmo, IHold
     [SerializeField, Range(0.01f, 3.0f)]
     float beamWidth;
 
+    bool fireTick;
     LineRenderer beam;
 
     void Update()
@@ -32,7 +33,7 @@ public class Beam : Ammo, IAmmo, IHold
 
     public void Fire()
     {
-
+        fireTick = true;
     }
 
     public void WeaponBehaviour()
@@ -50,7 +51,13 @@ public class Beam : Ammo, IAmmo, IHold
 
         if (Physics.BoxCast(weapon.transform.position, Vector3.one * beamWidth, weapon.transform.forward, out hit, Quaternion.identity, ammoRange * ammoRangeMultiplier, impactTypes))
         {
-            beam.SetPosition(1, hit.point);
+            beam.SetPosition(1, new Vector3(hit.point.x, weapon.transform.position.y, hit.point.z));
+            
+            if (fireTick && hit.transform.gameObject.GetComponent<Damageable>() != null)
+            {
+                hit.transform.gameObject.GetComponent<Damageable>().DealDamage(baseDamage * damageMultiplier);
+                fireTick = false;
+            }
         }
 
         else
