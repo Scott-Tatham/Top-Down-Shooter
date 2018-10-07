@@ -5,21 +5,37 @@ using UnityEngine;
 
 public class UnitStats : MonoBehaviour
 {
-    int entityIndex;
+    [SerializeField]
     float health;
+    [SerializeField]
+    string unitName;
+
+    int entityIndex;
+    GameObject parent;
+
+    public float GetHealth() { return health; }
+    public string GetUnitName() { return unitName; }
+
+    public void SetHealth(float health)
+    {
+        this.health = health;
+        Death();
+    }
 
     void Death()
     {
         if (health <= 0)
         {
             // Return the pool when pooling is created.
-            gameObject.SetActive(false);
+            if (parent != null)
+            {
+                gameObject.SetActive(false);
+            }
+
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-    }
-    
-    [DevCommand("LogHealth", "<color=green> Working </color>")]
-    static void LogHealth(float health, string word)
-    {
-        Debug.Log(health + " " + word.Colour(Color.green));
     }
 }

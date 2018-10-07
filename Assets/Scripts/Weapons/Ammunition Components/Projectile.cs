@@ -18,6 +18,7 @@ public class Projectile : Ammo, IAmmo
         isFired = true;
         transform.position = weapon.transform.position;
         transform.rotation = weapon.transform.rotation;
+        transform.Rotate(Vector3.up, Random.Range(-90.0f, 90.0f) * (1.0f - accuracy));
 
         StartCoroutine(ProjectileLife());
     }
@@ -34,6 +35,11 @@ public class Projectile : Ammo, IAmmo
     {
         if (((1 << col.gameObject.layer) | impactTypes.value) == impactTypes.value)
         {
+            if (col.gameObject.GetComponent<Damageable>() != null)
+            {
+                col.gameObject.GetComponent<Damageable>().DealDamage(baseDamage * damageMultiplier);
+            }
+
             gameObject.SetActive(false);
             isFired = false;
         }

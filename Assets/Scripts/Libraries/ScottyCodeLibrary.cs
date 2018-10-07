@@ -41,10 +41,57 @@ namespace ScottyCode
         /// </summary>
         public static class RichTextExtentions
         {
-            // Colours string with the specified colour.
-            public static string Colour(this string val, Color color)
+            /// <summary>
+            /// Bolds a string.
+            /// </summary>
+            /// <param name="val"> The input string. </param>
+            /// <returns> The string with bold applied. </returns>
+            public static string Bold(this string val)
             {
-                return "<color=#" + ColorUtility.ToHtmlStringRGBA(color) + ">" + val + "</color>";
+                return "<b>" + val + "</b>";
+            }
+
+            /// <summary>
+            /// Italics a string.
+            /// </summary>
+            /// <param name="val"> The input string. </param>
+            /// <returns> The string with italics applied. </returns>
+            public static string Italics(this string val)
+            {
+                return "<i>" + val + "</i>";
+            }
+
+            /// <summary>
+            /// Change the size of string font to the specified size.
+            /// </summary>
+            /// <param name="val"> The input string. </param>
+            /// <param name="size"> The resized string font. </param>
+            /// <returns></returns>
+            public static string Size(this string val, int size)
+            {
+                return "<size=" + size + ">" + val + "</size>";
+            }
+
+            /// <summary>
+            /// Colour a string with the specified colour.
+            /// </summary>
+            /// <param name="val"> The input string. </param>
+            /// <param name="color"> The specified colour. </param>
+            /// <returns> The colourised string. </returns>
+            public static string Colour(this string val, Color colour)
+            {
+                return "<color=#" + ColorUtility.ToHtmlStringRGBA(colour) + ">" + val + "</color>";
+            }
+
+            /// <summary>
+            /// Colour a string with the specified colour.
+            /// </summary>
+            /// <param name="val"> The input string. </param>
+            /// <param name="hexColour"> The specified colour. </param>
+            /// <returns> The colourised string. </returns>
+            public static string Colour(this string val, string hexColour)
+            {
+                return "<color=" + hexColour + ">" + val + "</color>";
             }
         }
 

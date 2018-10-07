@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 199576521618185978}
   - component: {fileID: 114003763834015392}
   m_Layer: 0
-  m_Name: Spray
+  m_Name: TestSpray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,8 +56,8 @@ MonoBehaviour:
   primaryFireType: 2
   impactTypes:
     serializedVersion: 2
-    m_Bits: 1536
-  damageMultiplier: 0.01
+    m_Bits: 3584
+  damageMultiplier: 0.1
   fireRateMultiplier: 1
   ammoRangeMultiplier: 0.1
 --- !u!198 &198031025094783158
@@ -3638,7 +3638,7 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 512
+      m_Bits: 3584
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5

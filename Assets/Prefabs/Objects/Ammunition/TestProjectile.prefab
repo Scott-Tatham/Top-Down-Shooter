@@ -115,7 +115,7 @@ MonoBehaviour:
   primaryFireType: 0
   impactTypes:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 3584
   damageMultiplier: 1
   fireRateMultiplier: 0.5
   ammoRangeMultiplier: 4

@@ -27,6 +27,9 @@ public class Spray : Ammo, IAmmo, IHold
         ParticleSystem.MainModule main = new ParticleSystem.MainModule();
         main = spray.main;
         main.startLifetime = ammoRange * ammoRangeMultiplier;
+        ParticleSystem.ShapeModule shape = new ParticleSystem.ShapeModule();
+        shape = spray.shape;
+        shape.angle = 90 * (1.0f - accuracy);
         gameObject.SetActive(true);
         spray.Play();
         isFired = true;
@@ -57,9 +60,9 @@ public class Spray : Ammo, IAmmo, IHold
 
     void OnParticleCollision(GameObject other)
     {
-        if (other.gameObject.layer != impactTypes.value)
+        if (other.GetComponent<Damageable>() != null)
         {
-
+            other.GetComponent<Damageable>().DealDamage(baseDamage * damageMultiplier);
         }
     }
 }

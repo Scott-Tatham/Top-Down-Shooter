@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 120284320006326922}
   - component: {fileID: 114423124215104512}
   m_Layer: 0
-  m_Name: Beam
+  m_Name: TestBeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,8 +55,8 @@ MonoBehaviour:
   primaryFireType: 3
   impactTypes:
     serializedVersion: 2
-    m_Bits: 512
-  damageMultiplier: 1
+    m_Bits: 3584
+  damageMultiplier: 1.5
   fireRateMultiplier: 1
   ammoRangeMultiplier: 1
   beamWidth: 1

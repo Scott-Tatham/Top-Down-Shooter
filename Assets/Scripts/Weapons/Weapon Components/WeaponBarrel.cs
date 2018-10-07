@@ -13,6 +13,7 @@ public class WeaponBarrel : MonoBehaviour
 
     Weapon weapon;
     WeaponClip weaponClip;
+    WeaponScope weaponScope;
 
     public float GetBaseDamage() { return baseDamage; }
     public float GetFireRate() { return fireRate; }
@@ -26,5 +27,6 @@ public class WeaponBarrel : MonoBehaviour
     void Start()
     {
         weaponClip = GetComponent<WeaponClip>();
+        weaponScope = GetComponent<WeaponScope>();
     }
 }

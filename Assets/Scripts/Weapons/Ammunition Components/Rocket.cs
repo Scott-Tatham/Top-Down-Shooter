@@ -20,6 +20,7 @@ public class Rocket : Ammo, IAmmo
         transform.position = weapon.transform.position;
         transform.rotation = weapon.transform.rotation;
         transform.Rotate(90, 0, 0, Space.Self);
+        transform.Rotate(Vector3.forward, Random.Range(-90.0f, 90.0f) * (1.0f - accuracy));
 
         StartCoroutine(RocketLife());
     }
@@ -41,9 +42,12 @@ public class Rocket : Ammo, IAmmo
 
             Collider[] impactCols = Physics.OverlapSphere(col.contacts[0].point, impactRadius, impactTypes);
 
-            if (impactCols.Length > 0)
+            for (int i = 0; i < impactCols.Length; i++)
             {
-
+                if (impactCols[i].gameObject.GetComponent<Damageable>() != null)
+                {
+                    impactCols[i].gameObject.GetComponent<Damageable>().DealDamage(baseDamage * damageMultiplier);
+                }
             }
         }
     }
