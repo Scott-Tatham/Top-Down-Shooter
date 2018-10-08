@@ -20,7 +20,7 @@ public class WeaponScope : MonoBehaviour
 {
     [SerializeField]
     ScopeType scopeType;
-    [SerializeField, Range(1.0f, 20.0f)]
+    [SerializeField, Range(10.0f, 500.0f)]
     float scopeRange;
     [SerializeField, Range(0.01f, 1.0f)]
     float accuracy;
@@ -38,6 +38,8 @@ public class WeaponScope : MonoBehaviour
         weapon = GetComponent<Weapon>();
         weaponClip = GetComponent<WeaponClip>();
         weaponBarrel = GetComponent<WeaponBarrel>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void Update()
@@ -45,14 +47,34 @@ public class WeaponScope : MonoBehaviour
         CrossHairPos();
     }
 
+    void CrossHairState()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Cursor.visible)
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Confined;
+            }
+
+            else
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+        }
+    }
+
     void CrossHairPos()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Vector2.Distance(Input.mousePosition, Camera.main.WorldToScreenPoint(weapon.transform.position)) > scopeRange)
         {
-            Debug.Log(Camera.main.WorldToScreenPoint(weapon.transform.position));
+            crossHair.rectTransform.transform.position = (Input.mousePosition - Camera.main.WorldToScreenPoint(weapon.transform.position)).normalized * scopeRange + Camera.main.WorldToScreenPoint(weapon.transform.position);
         }
 
-        Vector3 playerScreenPos = Camera.main.WorldToScreenPoint(weapon.transform.position);
-        crossHair.rectTransform.position = Vector2.ClampMagnitude(Input.mousePosition, scopeRange * 10.0f) + new Vector2(playerScreenPos.x, playerScreenPos.y);
+        else
+        {
+            crossHair.rectTransform.position = Input.mousePosition;
+        }
     }
 }

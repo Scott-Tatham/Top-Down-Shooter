@@ -2182,8 +2182,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scopeType: 0
-  scopeRange: 20
-  accuracy: 0.13
+  scopeRange: 300
+  accuracy: 0.9
   crossHair: {fileID: 743261594}
 --- !u!1 &1072946992
 GameObject:
