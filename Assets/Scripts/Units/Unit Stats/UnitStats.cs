@@ -1,4 +1,4 @@
-﻿using ScottyCode.Extensions;
+﻿using LazyTitan.Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

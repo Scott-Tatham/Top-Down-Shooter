@@ -1,4 +1,4 @@
-﻿using ScottyCode.Extensions;
+﻿using LazyTitan.Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +7,21 @@ public class UnitSpawner : MonoBehaviour
 {
     [SerializeField]
     GameObject[] unitObjs;
+
+    static UnitSpawner unitSpawner;
+
+    void Start()
+    {
+        if (unitSpawner == null)
+        {
+            unitSpawner = this;
+        }
+
+        else if (unitSpawner != this)
+        {
+            Destroy(this);
+        }
+    }
 
     [DevCommand("Spawn", "Spawns a units of specified amount, using an ID.")]
     public void SpawnUnit(int amount, int id)
