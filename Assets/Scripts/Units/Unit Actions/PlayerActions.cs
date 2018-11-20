@@ -5,19 +5,11 @@ using LazyTitan.Serialization.Attributes;
 // Needs to be updated to support 4 players on controllers.
 public class PlayerActions : MonoBehaviour
 {
-    [SerializeField, FieldProperties(RuntimeBehaviour.BOTH, true)]
-    List<Vector3> listedInt;
-
     PlayerStats playerStats;
     Weapon weapon;
 
     void Start()
     {
-        listedInt = new List<Vector3>();
-        for (int i = 0; i < 5; i++)
-        {
-            listedInt.Add(new Vector3(i - 1, i, i + 1));
-        }
         playerStats = GetComponent<PlayerStats>();
         weapon = GetComponentInChildren<Weapon>();
     }
