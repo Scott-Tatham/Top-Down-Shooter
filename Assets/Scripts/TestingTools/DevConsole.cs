@@ -1,4 +1,4 @@
-﻿using ScottyCode.Extensions;
+﻿using LazyTitan.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -146,60 +146,46 @@ public class DevConsole : MonoBehaviour
     {
         if (logFileCheck)
         {
-            string outputPath = Application.streamingAssetsPath + "/Logs/";
+            string outputPath = Application.streamingAssetsPath + "/Logs";
+            Directory.CreateDirectory(outputPath);
+            outputPath = outputPath + "/";
 
             for (int i = 5; i > -1; i--)
             {
                 if (i == 0)
                 {
-                    if (File.Exists(outputPath + "Latest.txt"))
+                    List<string> logOutput = new List<string>();
+
+                    for (int j = 0; j < logHistory.Count; j++)
                     {
-                        List<string> logOutput = new List<string>();
+                        string currentLog = logHistory[j].GetComponent<Text>().text;
 
-                        for (int j = 0; j < logHistory.Count; j++)
+                        if (currentLog.Contains("<"))
                         {
-                            string currentLog = logHistory[j].GetComponent<Text>().text;
-
-                            if (currentLog.Contains("<"))
-                            {
-                                currentLog = RemoveHTML(currentLog);
-                            }
-
-                            logOutput.Add(currentLog);
+                            currentLog = RemoveHTML(currentLog);
                         }
 
-                        File.WriteAllLines(outputPath + "Latest.txt", logOutput.ToArray());
+                        logOutput.Add(currentLog);
                     }
 
-                    else
-                    {
-                        File.Create(outputPath + "Latest");
-                    }
+                    File.WriteAllLines(outputPath + "Latest.txt", logOutput.ToArray());
                 }
 
                 else
                 {
-                    if (File.Exists(outputPath + "Log" + i.NumberNames() + ".txt"))
-                    {
-                        if (i == 5)
-                        {
-                            File.Delete(outputPath + "Log" + i.NumberNames() + ".txt");
-                        }
-
-                        if (File.Exists(outputPath + "Log" + (i - 1).NumberNames() + ".txt"))
-                        {
-                            File.Copy(outputPath + "Log" + (i - 1).NumberNames() + ".txt", outputPath + "Log" + i.NumberNames() + ".txt", true);
-                        }
-
-                        else if (i == 1 && File.Exists(outputPath + "Latest.txt"))
-                        {
-                            File.Copy(outputPath + "Latest.txt", outputPath + "Log" + i.NumberNames() + ".txt", true);
-                        }
-                    }
-
-                    else
+                    if (!File.Exists(outputPath + "Log" + i.NumberNames() + ".txt"))
                     {
                         File.Create(outputPath + "Log" + i.NumberNames() + ".txt");
+                    }
+
+                    if (File.Exists(outputPath + "Log" + (i - 1).NumberNames() + ".txt"))
+                    {
+                        File.Copy(outputPath + "Log" + (i - 1).NumberNames() + ".txt", outputPath + "Log" + i.NumberNames() + ".txt", true);
+                    }
+
+                    else if (i == 1 && File.Exists(outputPath + "Latest.txt"))
+                    {
+                        File.Copy(outputPath + "Latest.txt", outputPath + "Log" + i.NumberNames() + ".txt", true);
                     }
                 }
             }
