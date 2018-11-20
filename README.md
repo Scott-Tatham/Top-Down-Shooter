@@ -5,3 +5,4 @@ Keep the project folders clean.
 Archive old assets before removing.
 Don't willy nilly add folders.
 Try to work in individual branches, not main.
+Give detailed commits.
