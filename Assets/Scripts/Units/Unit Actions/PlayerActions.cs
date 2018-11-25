@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using LazyTitan.Serialization.Attributes;
+
 // Needs to be updated to support 4 players on controllers.
 public class PlayerActions : MonoBehaviour
 {

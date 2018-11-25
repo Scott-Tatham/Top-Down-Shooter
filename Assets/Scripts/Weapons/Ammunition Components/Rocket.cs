@@ -44,9 +44,9 @@ public class Rocket : Ammo, IAmmo
 
             for (int i = 0; i < impactCols.Length; i++)
             {
-                if (impactCols[i].gameObject.GetComponent<Damageable>() != null)
+                if (impactCols[i].gameObject.GetComponent<Damage>())
                 {
-                    impactCols[i].gameObject.GetComponent<Damageable>().DealDamage(baseDamage * damageMultiplier);
+                    impactCols[i].gameObject.GetComponent<Damage>().ApplyDamage(baseDamage * damageMultiplier);
                 }
             }
         }

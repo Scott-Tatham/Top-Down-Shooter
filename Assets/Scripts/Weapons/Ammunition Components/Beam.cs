@@ -53,9 +53,9 @@ public class Beam : Ammo, IAmmo, IHold
         {
             beam.SetPosition(1, new Vector3(hit.point.x, weapon.transform.position.y, hit.point.z));
             
-            if (fireTick && hit.transform.gameObject.GetComponent<Damageable>() != null)
+            if (fireTick && hit.transform.gameObject.GetComponent<Damage>())
             {
-                hit.transform.gameObject.GetComponent<Damageable>().DealDamage(baseDamage * damageMultiplier);
+                hit.transform.gameObject.GetComponent<Damage>().ApplyDamage(baseDamage * damageMultiplier);
                 fireTick = false;
             }
         }

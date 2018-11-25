@@ -170,7 +170,7 @@ namespace LazyTitan
                                     break;
 
                                 case SerializedPropertyType.ObjectReference:
-                                    EditorGUI.LabelField(position, propertyLabel, property.objectReferenceValue != null ? property.objectReferenceValue.ToString() : "Null", GUIStyle.none);
+                                    EditorGUI.LabelField(position, propertyLabel, property.objectReferenceValue ? property.objectReferenceValue.ToString() : "Null", GUIStyle.none);
 
                                     break;
 
@@ -239,7 +239,7 @@ namespace LazyTitan
                                     break;
 
                                 case SerializedPropertyType.ExposedReference:
-                                    EditorGUI.LabelField(position, propertyLabel, property.exposedReferenceValue != null ? property.exposedReferenceValue.ToString() : "Null", GUIStyle.none);
+                                    EditorGUI.LabelField(position, propertyLabel, property.exposedReferenceValue ? property.exposedReferenceValue.ToString() : "Null", GUIStyle.none);
 
                                     break;
 
