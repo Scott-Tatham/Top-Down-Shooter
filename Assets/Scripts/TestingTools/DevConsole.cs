@@ -57,7 +57,7 @@ public class DevConsole : MonoBehaviour
 
     void Start()
     {
-        if (devConsole == null)
+        if (!devConsole)
         {
             devConsole = this;
         }
@@ -242,7 +242,7 @@ public class DevConsole : MonoBehaviour
 
                             object classInstance;
 
-                            if (devCommands[i].DeclaringType.BaseType == typeof(MonoBehaviour) && FindObjectOfType(devCommands[i].DeclaringType) != null)
+                            if (devCommands[i].DeclaringType.BaseType == typeof(MonoBehaviour) && FindObjectOfType(devCommands[i].DeclaringType))
                             {
                                 classInstance = FindObjectOfType(devCommands[i].DeclaringType);
                             }

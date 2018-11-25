@@ -55,7 +55,7 @@ public class TerrainGeneration : MonoBehaviour
 
     void Start()
     {
-        if (terrainGeneration == null)
+        if (!terrainGeneration)
         {
             terrainGeneration = this;
         }

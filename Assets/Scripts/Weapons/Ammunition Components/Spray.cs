@@ -60,9 +60,9 @@ public class Spray : Ammo, IAmmo, IHold
 
     void OnParticleCollision(GameObject other)
     {
-        if (other.GetComponent<Damageable>() != null)
+        if (other.GetComponent<Damage>())
         {
-            other.GetComponent<Damageable>().DealDamage(baseDamage * damageMultiplier);
+            other.GetComponent<Damage>().ApplyDamage(baseDamage * damageMultiplier);
         }
     }
 }
