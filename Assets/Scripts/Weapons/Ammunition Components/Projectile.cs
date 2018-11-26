@@ -35,9 +35,9 @@ public class Projectile : Ammo, IAmmo
     {
         if (((1 << col.gameObject.layer) | impactTypes.value) == impactTypes.value)
         {
-            if (col.gameObject.GetComponent<Damageable>() != null)
+            if (col.gameObject.GetComponent<Damage>())
             {
-                col.gameObject.GetComponent<Damageable>().DealDamage(baseDamage * damageMultiplier);
+                col.gameObject.GetComponent<Damage>().ApplyDamage(baseDamage * damageMultiplier);
             }
 
             gameObject.SetActive(false);

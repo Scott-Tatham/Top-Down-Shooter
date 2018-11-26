@@ -12,7 +12,7 @@ public class UnitSpawner : MonoBehaviour
 
     void Start()
     {
-        if (unitSpawner == null)
+        if (!unitSpawner)
         {
             unitSpawner = this;
         }

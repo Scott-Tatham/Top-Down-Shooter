@@ -2,17 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : UnitStats
 {
-    [SerializeField]
-    float baseMoveSpeed;
 
-    float currentMoveSpeed;
-
-    void Start()
-    {
-        currentMoveSpeed = baseMoveSpeed;
-    }
-
-    public float GetCurrentMoveSpeed() { return currentMoveSpeed; }
 }

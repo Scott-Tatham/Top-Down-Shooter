@@ -2777,7 +2777,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41cceb9325756f444b35099fac56ca6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseMoveSpeed: 10
+  entityIndex: 0
+  unitName: 
+  intitialHealth: 10
+  currentHealth: 0
+  intitialMoveSpeed: 10
+  currentMoveSpeed: 0
+  blind: 0
 --- !u!1 &1444678648
 GameObject:
   m_ObjectHideFlags: 0

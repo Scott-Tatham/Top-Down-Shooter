@@ -23,4 +23,9 @@ public class Ammo : MonoBehaviour
     public void SetAmmoRange(float ammoRange) { this.ammoRange = ammoRange; }
     public void SetAccuracy(float accuracy) { this.accuracy = accuracy; }
     public void SetWeapon(Weapon weapon) { this.weapon = weapon; }
+
+    public void EffectorCall()
+    {
+
+    }
 }
