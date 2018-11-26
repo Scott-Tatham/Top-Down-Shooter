@@ -30,6 +30,8 @@ namespace LazyTitan
 
             #region Attributes/PropertyAttribute
 
+            #region Field Properties
+
             /// <summary>
             /// Determines various properties of how a field appears in the inspector.
             /// </summary>
@@ -63,7 +65,21 @@ namespace LazyTitan
 
             #endregion
 
+            #region EnumBitMask
+
+            [AttributeUsage(AttributeTargets.Field, AllowMultiple = true, Inherited = true)]
+            public class EnumBitMaskAttribute : PropertyAttribute
+            {
+
+            }
+
+            #endregion
+
+            #endregion
+
             #region Drawers
+
+            #region FieldProperties
 
             /// <summary>
             /// Determines various properties of how a field appears in the inspector.
@@ -283,6 +299,21 @@ namespace LazyTitan
                     }
                 }
             }
+
+            #endregion
+
+            #region EnumBitMask
+
+            [CustomPropertyDrawer(typeof(EnumBitMaskAttribute))]
+            public class EnumBitMaskDrawer : PropertyDrawer
+            {
+                public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+                {
+                    property.intValue = EditorGUI.MaskField(position, label, property.intValue, property.enumDisplayNames);
+                }
+            }
+
+            #endregion
 
             #endregion
 
