@@ -8,12 +8,15 @@ public class EnemyBase : MonoBehaviour
     public int startingHealth = 5;
     public int currentHealth;
 
+    bool isInRange;
     bool isHit;
     bool isDead;
-    bool isInRange;
+
+    int playerLayer;
 
     protected virtual void Start()
     {
+        playerLayer = LayerMask.NameToLayer("Player");
         currentHealth = startingHealth;
     }
 
@@ -21,8 +24,11 @@ public class EnemyBase : MonoBehaviour
     {
         if (isInRange)
         {
-            
+            Debug.Log("Attack");
+            Attack();
         }
+
+        isHit = false;
     }
 
     public void TakeDamage(int amount)
@@ -46,5 +52,26 @@ public class EnemyBase : MonoBehaviour
     {
         isDead = true;
         gameObject.SetActive(false);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer == playerLayer)
+        {
+            isInRange = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.layer == playerLayer)
+        {
+            isInRange = false;
+        }
+    }
+
+    void Attack()
+    {
+        Debug.Log("Player hit");
     }
 }
