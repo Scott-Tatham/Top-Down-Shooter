@@ -7,6 +7,7 @@ public class EnemyBase : MonoBehaviour
 {
     public int startingHealth = 5;
     public int currentHealth;
+    public Transform target;
 
     bool isInRange;
     bool isHit;
@@ -29,6 +30,7 @@ public class EnemyBase : MonoBehaviour
         }
 
         isHit = false;
+        Turning();
     }
 
     public void TakeDamage(int amount)
@@ -73,5 +75,10 @@ public class EnemyBase : MonoBehaviour
     void Attack()
     {
         Debug.Log("Player hit");
+    }
+
+    void Turning()
+    {
+        transform.LookAt(target);
     }
 }

@@ -8,7 +8,7 @@ public class ChargerEnemies : EnemyBase
     public float moveSpeed;
     public float timeBetweenAttack = 2;
 
-    ChargerStates chargerState;
+    public ChargerStates chargerState;
     
     float distance;
     float moveSpeedStore;
@@ -17,17 +17,14 @@ public class ChargerEnemies : EnemyBase
     float sphereTimer;
 
     bool startTimer;
-
-    GameObject target;
+    
     SphereCollider dmgCollider;
 
     private void Awake()
     {
-        target = GameObject.FindGameObjectWithTag("Player");
         dmgCollider = GetComponent<SphereCollider>();
 
         moveSpeedStore = moveSpeed;
-
     }
 
     protected override void Update()
@@ -76,11 +73,9 @@ public class ChargerEnemies : EnemyBase
                     if (dmgCollider.radius < 10)
                     {
                         dmgCollider.radius += 1f;
-                        
                     }
                     else
                     {
-                        
                         dmgCollider.enabled = false;
                     }
                 }
