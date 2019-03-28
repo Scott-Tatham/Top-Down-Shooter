@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using LazyTitan.Extensions;
 
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : MonoBehaviour, IDamagable<int>
 {
     public int startingHealth = 5;
     public int currentHealth;
     public Transform target;
+    public float rotSpeed;
+    public float moveSpeed;
 
     bool isInRange;
     bool isHit;
     bool isDead;
+
+    bool isWalking = false;
+    bool isWandering = false;
+    bool isRotatingRight = false;
+    bool isRotatingLeft = false;
 
     int playerLayer;
 
@@ -30,10 +37,29 @@ public class EnemyBase : MonoBehaviour
         }
 
         isHit = false;
-        Turning();
+
+        if (isWandering == false)
+        {
+            StartCoroutine(Wander());
+        }
+
+        if (isRotatingRight == true)
+        {
+            transform.Rotate(transform.up * rotSpeed * Time.deltaTime);
+        }
+
+        if (isRotatingLeft == true)
+        {
+            transform.Rotate(transform.right * -rotSpeed * Time.deltaTime);
+        }
+
+        if (isWalking == true)
+        {
+            transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        }
     }
 
-    public void TakeDamage(int amount)
+    public void Damage(int damageTaken)
     {
         isHit = true;
 
@@ -42,7 +68,7 @@ public class EnemyBase : MonoBehaviour
             return;
         }
 
-        currentHealth -= amount;
+        currentHealth -= damageTaken;
 
         if (currentHealth <= 0 && !isDead)
         {
@@ -77,8 +103,44 @@ public class EnemyBase : MonoBehaviour
         Debug.Log("Player hit");
     }
 
-    void Turning()
+    public IEnumerator Wander()
     {
-        transform.LookAt(target);
+        int rotTime = Random.Range(1, 3);
+        int rotWait = Random.Range(1, 4);
+        int rotLOrR = Random.Range(1, 2);
+        int walkWait = Random.Range(1, 4);
+        int walkTime = Random.Range(1, 4);
+
+        isWandering = true;
+
+        yield return new WaitForSeconds(walkWait);
+
+        isWalking = true;
+
+        yield return new WaitForSeconds(walkTime);
+
+        isWalking = false;
+
+        yield return new WaitForSeconds(rotWait);
+
+        if (rotLOrR == 1)
+        {
+            isRotatingRight = true;
+
+            yield return new WaitForSeconds(rotTime);
+
+            isRotatingRight = false;
+        }
+
+        if (rotLOrR == 2)
+        {
+            isRotatingLeft = true;
+
+            yield return new WaitForSeconds(rotTime);
+
+            isRotatingLeft = false;
+        }
+
+        isWandering = false;
     }
 }
